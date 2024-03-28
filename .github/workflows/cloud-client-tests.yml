@@ -27,3 +27,23 @@ jobs:
         run: |
           apt-get update && apt-get -y install gettext-base
           ./run-tests.sh
+      - name: Slack notification
+        if: ${{ failure() }}
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: 'C02DSE7K3EF'
+          payload: |
+            {
+              "text": "Cloud client integration tests production ${{ job.status }} (version: ${{ matrix.cloud-client-version }}). ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Cloud client integration tests production ${{ job.status }} (version: ${{ matrix.cloud-client-version }}). <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Details>"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
