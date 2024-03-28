@@ -1,0 +1,29 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '46 * * * *'
+
+jobs:
+  cloud-client-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cloud-client-version:
+          - 'releases/latest'
+          - 'releases/6.1.3'
+          - 'main'
+        ucm-release-version:
+          - 'release%2F0.5.12'
+          - 'trunk-build'
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run tests
+        env:
+          CLOUD_CLIENT_VERSION: ${{ matrix.cloud-client-version }}
+          UCM_RELEASE: ${{ matrix.ucm-release-version }}
+          UNISON_CLOUD_ACCESS_TOKEN: ${{ secrets.CLOUD_USER_ACCESS_TOKEN }}
+          UNISON_DEBUG: timing
+        run: |
+          apt-get update && apt-get -y install gettext-base
+          ./run-tests.sh
