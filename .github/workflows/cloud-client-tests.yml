@@ -7,6 +7,8 @@ jobs:
   cloud-client-tests:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
+      max-parallel: 1
       matrix:
         cloud-client-version:
           - 'releases/latest'
