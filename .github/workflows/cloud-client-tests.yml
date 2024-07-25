@@ -15,7 +15,7 @@ jobs:
           - 'releases/6.1.3'
           - 'main'
         ucm-release-version:
-          - 'release%2F0.5.12'
+          - 'release%2F0.5.25'
           - 'trunk-build'
     steps:
       - name: Check out repository code
