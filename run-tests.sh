@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 release_file_name() {
-  case $"UCM_RELEASE" in
+  case "$UCM_RELEASE" in
     "release%2F0.5.25" | "release%2F0.5.26" | "release%2F0.5.27")
       echo "ucm-linux.tar.gz"
       ;;
