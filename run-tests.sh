@@ -2,7 +2,18 @@
 
 set -euxo pipefail
 
-curl --fail-with-body -L "https://github.com/unisonweb/unison/releases/download/${UCM_RELEASE}/ucm-linux.tar.gz" | tar -xz
+release_file_name() {
+  case $"UCM_RELEASE" in
+    "release%2F0.5.25" | "release%2F0.5.26" | "release%2F0.5.27")
+      echo "ucm-linux.tar.gz"
+      ;;
+    *)
+      echo "ucm-linux.tar-x64.gz"
+      ;;
+  esac
+}
+
+curl --fail-with-body -L "https://github.com/unisonweb/unison/releases/download/${UCM_RELEASE}/$(release_file_name)" | tar -xz
 
 envsubst < cloud-tests.tpl.md > cloud-tests.md
 
