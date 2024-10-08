@@ -8,7 +8,7 @@ release_file_name() {
       echo "ucm-linux.tar.gz"
       ;;
     *)
-      echo "ucm-linux.tar-x64.gz"
+      echo "ucm-linux-x64.tar.gz"
       ;;
   esac
 }
