@@ -13,7 +13,7 @@ set -euxo pipefail
 #   esac
 # }
 
-curl --fail-with-body -L "https://github.com/unisonweb/unison/actions/runs/11465576123/artifacts/2089481087" | tar -xz
+curl --fail-with-body -L "https://github.com/unisonweb/unison/actions/runs/11465576123/artifacts/2089481087" -o ./ucm
 
 envsubst < cloud-tests.tpl.md > cloud-tests.md
 
