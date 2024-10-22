@@ -13,7 +13,7 @@ set -euxo pipefail
 #   esac
 # }
 
-curl --fail-with-body -L "https://github.com/unisonweb/unison/actions/runs/11465576123/artifacts/2089481087" -o ./ucm
+curl --fail-with-body -L "https://github.com/unisonweb/unison/releases/download/stack-assertions-build/ucm-linux-x64.tar.gz" | tar -xz
 
 envsubst < cloud-tests.tpl.md > cloud-tests.md
 
