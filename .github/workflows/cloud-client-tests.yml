@@ -1,11 +1,15 @@
 on:
+  pull_request:
+  push:
+    branches:
+      - main
   workflow_dispatch:
   schedule:
     - cron: '46 * * * *'
 
 jobs:
   cloud-client-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -20,10 +24,22 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Restore cached ucm release
+        id: restore-cached-ucm
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            /opt/unisonlanguage
+            /usr/local/bin/ucm
+          key: ${{ runner.os }}-ucm-${{ matrix.ucm-release-version }}
+      - name: Install ucm
+        if: steps.restore-cached-ucm.outputs.cache-hit != 'true'
+        env:
+          UCM_RELEASE: ${{ matrix.ucm-release-version }}
+        run: ./install-ucm.sh
       - name: Run tests
         env:
           CLOUD_CLIENT_VERSION: ${{ matrix.cloud-client-version }}
-          UCM_RELEASE: ${{ matrix.ucm-release-version }}
           UNISON_CLOUD_ACCESS_TOKEN: ${{ secrets.CLOUD_USER_ACCESS_TOKEN }}
           UNISON_DEBUG: timing
         run: |
@@ -49,3 +65,12 @@ jobs:
             }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: Cache ucm release
+        if: ${{ !cancelled() && steps.restore-cached-ucm.outputs.cache-hit != 'true' && startsWith(matrix.ucm-release-version, 'release') }}
+        id: save-ucm-to-cache
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            /opt/unisonlanguage
+            /usr/local/bin/ucm
+          key: ${{ steps.restore-cached-ucm.outputs.cache-primary-key }}
