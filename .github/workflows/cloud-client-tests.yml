@@ -37,6 +37,14 @@ jobs:
         env:
           UCM_RELEASE: ${{ matrix.ucm-release-version }}
         run: ./install-ucm.sh
+      - name: Cache Unison codebase
+        id: cache-unison-codebase
+        uses: actions/cache@v4
+        with:
+          path: unison-code
+          key: unison-codebase-ucm_${{ matrix.ucm-release-version }}-cloud-client_${{ matrix.cloud-client-version }}
+          restore-keys: |
+            unison-codebase-ucm_${{ matrix.ucm-release-version }}-cloud-client_
       - name: Run tests
         env:
           CLOUD_CLIENT_VERSION: ${{ matrix.cloud-client-version }}
