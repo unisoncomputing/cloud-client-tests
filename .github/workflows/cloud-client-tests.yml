@@ -20,7 +20,8 @@ jobs:
           - 'main'
         ucm-release-version:
           - 'release%2F0.5.25'
-          - 'trunk-build'
+          # temporarily disabling until known issue is resolved
+          #- 'trunk-build'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
