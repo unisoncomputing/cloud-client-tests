@@ -23,10 +23,10 @@ jobs:
           - 'trunk-build'
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Restore cached ucm release
         id: restore-cached-ucm
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
         with:
           path: |
             /opt/unisonlanguage
@@ -39,7 +39,7 @@ jobs:
         run: ./install-ucm.sh
       - name: Cache Unison codebase
         id: cache-unison-codebase
-        uses: actions/cache@v4
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
         with:
           path: unison-code
           key: unison-codebase-ucm_${{ matrix.ucm-release-version }}-cloud-client_${{ matrix.cloud-client-version }}
@@ -55,7 +55,7 @@ jobs:
           ./run-tests.sh
       - name: Slack notification
         if: ${{ failure() }}
-        uses: slackapi/slack-github-action@v1.24.0
+        uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d # v2.0.0
         with:
           channel-id: 'C02DSE7K3EF'
           payload: |
@@ -76,7 +76,7 @@ jobs:
       - name: Cache ucm release
         if: ${{ !cancelled() && steps.restore-cached-ucm.outputs.cache-hit != 'true' && startsWith(matrix.ucm-release-version, 'release') }}
         id: save-ucm-to-cache
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
         with:
           path: |
             /opt/unisonlanguage
