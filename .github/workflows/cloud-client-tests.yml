@@ -57,22 +57,16 @@ jobs:
         if: ${{ failure() }}
         uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d # v2.0.0
         with:
-          channel-id: 'C02DSE7K3EF'
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
-            {
-              "text": "Cloud client integration tests production ${{ job.status }} (version: ${{ matrix.cloud-client-version }}). ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Cloud client integration tests production ${{ job.status }} (version: ${{ matrix.cloud-client-version }}). <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Details>"
-                  }
-                }
-              ]
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+            channel: "C02DSE7K3EF"
+            text: "Cloud client integration tests production ${{ job.status }} (version: ${{ matrix.cloud-client-version }}). ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            blocks:
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "Cloud client integration tests production ${{ job.status }} (version: ${{ matrix.cloud-client-version }}). <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Details>"
       - name: Cache ucm release
         if: ${{ !cancelled() && steps.restore-cached-ucm.outputs.cache-hit != 'true' && startsWith(matrix.ucm-release-version, 'release') }}
         id: save-ucm-to-cache
