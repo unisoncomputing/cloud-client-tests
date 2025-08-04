@@ -51,6 +51,7 @@ jobs:
           CLOUD_CLIENT_VERSION: ${{ matrix.cloud-client-version }}
           UNISON_CLOUD_ACCESS_TOKEN: ${{ secrets.CLOUD_USER_ACCESS_TOKEN }}
           UNISON_DEBUG: timing
+          UCM_RELEASE: ${{ matrix.ucm-release-version }}
         run: |
           apt-get update && apt-get -y install gettext-base
           ./run-tests.sh
