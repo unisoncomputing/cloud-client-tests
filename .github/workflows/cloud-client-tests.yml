@@ -40,6 +40,7 @@ jobs:
         run: ./install-ucm.sh
       - name: Cache Unison codebase
         id: cache-unison-codebase
+        if: ${{ !cancelled() && startsWith(matrix.ucm-release-version, 'release') }}
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
         with:
           path: unison-code
