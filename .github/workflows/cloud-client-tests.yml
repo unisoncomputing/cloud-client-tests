@@ -40,6 +40,7 @@ jobs:
         run: ./install-ucm.sh
       - name: Cache Unison codebase
         id: cache-unison-codebase
+        if: ${{ !cancelled() && startsWith(matrix.ucm-release-version, 'release') }}
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
         with:
           path: unison-code
@@ -51,6 +52,7 @@ jobs:
           CLOUD_CLIENT_VERSION: ${{ matrix.cloud-client-version }}
           UNISON_CLOUD_ACCESS_TOKEN: ${{ secrets.CLOUD_USER_ACCESS_TOKEN }}
           UNISON_DEBUG: timing
+          UCM_RELEASE: ${{ matrix.ucm-release-version }}
         run: |
           apt-get update && apt-get -y install gettext-base
           ./run-tests.sh
