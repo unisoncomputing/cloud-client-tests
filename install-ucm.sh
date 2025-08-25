@@ -15,6 +15,6 @@ release_file_name() {
 
 mkdir -p /opt/unisonlanguage
 
-curl --fail-with-body -L "https://github.com/unisonweb/unison/releases/download/${UCM_RELEASE}/$(release_file_name)" | tar -xz -C /opt/unisonlanguage
+curl --fail-with-body --retry 12 --retry-all-errors -L "https://github.com/unisonweb/unison/releases/download/${UCM_RELEASE}/$(release_file_name)" | tar -xz -C /opt/unisonlanguage
 
 ln -s /opt/unisonlanguage/ucm /usr/local/bin/ucm
