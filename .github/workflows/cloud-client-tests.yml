@@ -16,13 +16,16 @@ jobs:
       matrix:
         cloud-client-version:
           - 'releases/latest'
-          - 'releases/6.1.3'
           - 'main'
           - 'byoc'
         ucm-release-version:
-          - 'release%2F0.5.25'
-          - 'release%2F0.5.41'
+          - 'release%2F0.5.47'
           - 'trunk-build'
+        include:
+          - cloud-client-version: 'releases/6.1.3'
+            ucm-release-version: 'release%2F0.5.25'
+          - cloud-client-version: 'releases/6.1.3'
+            ucm-release-version: 'release%2F0.5.41'
     steps:
       - name: Check out repository code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
