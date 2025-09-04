@@ -17,7 +17,6 @@ jobs:
         cloud-client-version:
           - 'releases/latest'
           - 'main'
-          - 'byoc'
         ucm-release-version:
           - 'release%2F0.5.47'
           - 'trunk-build'
