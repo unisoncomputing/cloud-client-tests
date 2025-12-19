@@ -18,7 +18,7 @@ jobs:
           - 'releases/latest'
           - 'main'
         ucm-release-version:
-          - 'release%2F0.5.47'
+          - 'release%2F1.0.0'
           - 'trunk-build'
         include:
           - cloud-client-version: 'releases/6.1.3'
