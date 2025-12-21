@@ -18,6 +18,7 @@ run_transcript() {
   esac
 }
 
+ucm version # just to show it in the log
 run_transcript || exit_status=$?
 cat cloud-tests.output.md
 
